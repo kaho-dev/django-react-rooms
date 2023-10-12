@@ -5,3 +5,4 @@ This is mainly a practice project to get more familiar with Python and Django fr
 
 This project was created following a video course on Youtube: https://www.youtube.com/playlist?list=PLzMcBGfZo4-kCLWnGmK0jUBmGLaJxvi4j
 
+As I finish this course, I will look to extending it with my own features. Stay tuned for updates
