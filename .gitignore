@@ -12,7 +12,6 @@ settings.py
 .env
 
 media/
-static/
 venv/
 
 node_modules/
