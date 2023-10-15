@@ -7,4 +7,4 @@ This project was created following a video course on Youtube: https://www.youtub
 
 As I finish this course, I will look to extending it with my own features. Stay tuned for updates
 
-For lesson 4, the React Router for updated as for 2022 so I updated the code to work correctly. 
+For lesson 4, the React Router for updated as for 2023 so I updated the code to work correctly. 
