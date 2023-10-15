@@ -14,3 +14,5 @@ settings.py
 media/
 static/
 venv/
+
+frontend/node_modules
