@@ -6,7 +6,6 @@ __pycache__/
 
 # Django
 *.sqlite3
-settings.py
 
 
 .env
