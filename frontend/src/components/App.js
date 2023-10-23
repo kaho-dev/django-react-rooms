@@ -1,7 +1,6 @@
 import React from 'react'
-import {render} from "react-dom";
+import {createRoot} from "react-dom/client";
 import HomePage from './HomePage';
-import { Router } from 'react-router-dom';
 
 const App = () => {
   return (
@@ -14,4 +13,5 @@ const App = () => {
 export default App
 
 const appDiv = document.getElementById("app");
-render(<App/>, appDiv);
+const root = createRoot(appDiv);
+root.render(<App tab="home" />);
