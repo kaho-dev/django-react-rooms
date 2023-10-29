@@ -1,23 +1,47 @@
 import React, {useState} from 'react';
 import { TextField, Button, Grid, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const RoomJoinPage = () => {
 
+  let navigate = useNavigate();
+
   const [room, setRoom] = useState({
     roomCode: "",
-    error: "",
+    errorMsg: "",
+    error: false,
   });
 
-  const handleTextFieldChange = e => {
-    room.setRoom({
+  const handleTextFieldChange = (e) => {
+    setRoom({
       ...room,
       roomCode: e.target.value
     })
   }
 
   const roomButtonPress = () => {
-    console.log(room.roomCode)
+    const requestOptions = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        code: room.roomCode
+      })
+    };
+
+    fetch('/api/join-room', requestOptions)
+    .then((res) => {
+      if (res.ok) {
+        navigate('/room/' + room.roomCode)
+      } else {
+        setRoom({
+          ...room,
+          errorMsg: "Room not found."
+        }).catch((error) => {
+          console.log(error);
+        })
+      }
+    })
+
   }
 
   return (
@@ -33,9 +57,10 @@ const RoomJoinPage = () => {
               error={room.error}
               label="code"
               placeholder="Enter a Room Code"
-              //value={room.roomCode}
-              FormHelperTextProps={room.error} 
+              value={room.roomCode}
+              helperText={room.error} 
               variant="outlined"
+              onChange={handleTextFieldChange}
             />
           </Grid>
           <Grid item xs={12} align="center" >
