@@ -21,14 +21,14 @@ const HomePage = () => {
     });
 
     useEffect(() => {
-        fetch('/api/user-in-room')
-        .then((res) => res.json())
-        .then((data) => {
+        (async () => {
+            const response = await fetch('/api/user-in-room');
+            const data = await response.json();
             setRoomInfo({
                 roomCode: data.code
-            })
-        });
-    }, [])
+            });
+        })();
+    }, []);
 
     return (
         <Router>
