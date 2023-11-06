@@ -30,13 +30,23 @@ const HomePage = () => {
         })();
     }, []);
 
+    const clearRoomCode = () => {
+        setRoomInfo({
+            roomCode: null,
+        })
+    }
+
     return (
         <Router>
             <Routes>
                 <Route exact path="/" element={roomInfo.roomCode ? (<Navigate replace to={`/room/${roomInfo.roomCode}`} />) : (<FrontPage />)} />
                 <Route path="/join" element={<RoomJoinPage />} />
                 <Route path="/create" element={<CreateRoomPage />} />
-                <Route path="/room/:roomCode" element={<Room />} />
+                {/* <Route path="/room/:roomCode" element={<Room />} /> */}
+                <Route
+                    path="/room/:roomCode"
+                    element={<Room leaveRoomCallback={clearRoomCode} />}
+                />
             </Routes>
         </Router>
     )
