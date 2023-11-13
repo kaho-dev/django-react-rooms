@@ -17,24 +17,29 @@ const Room = (props) => {
 
     const { roomCode } = useParams();
 
-    useEffect(() => {
-        fetch('/api/get-room?code=' + roomCode)
-        .then((res) => {
-            if (!res.ok) {
-                props.leaveRoomCallback();
-                navigate('/');
-            }
-            return res.json();
-        })
-        .then((data) => {
-            setRoomInfo({
-                ...roomInfo,
-                votesToSkip: data.votes_to_skip,
-                guestCanPause: data.guest_can_pause,
-                isHost: data.is_host,
+    const getRoomDetails = () => {
+        return fetch('/api/get-room?code=' + roomCode)
+            .then((res) => {
+                if (!res.ok) {
+                    props.leaveRoomCallback();
+                    navigate('/');
+                }
+                return res.json();
             })
-        })
+            .then((data) => {
+                setRoomInfo({
+                    ...roomInfo,
+                    votesToSkip: data.votes_to_skip,
+                    guestCanPause: data.guest_can_pause,
+                    isHost: data.is_host,
+                })
+            })
+    }
+
+    useEffect(() => {
+        getRoomDetails();
     }, [roomCode, setRoomInfo]);
+
 
     const leaveButtonPressed = () => {
         const requestOptions = {
@@ -65,8 +70,8 @@ const Room = (props) => {
                         update={true} 
                         votesToSkip={roomInfo.votesToSkip} 
                         guestCanPause={roomInfo.guestCanPause} 
-                        roomCode={roomInfo.roomCode}
-                        //updateCallback={} 
+                        roomCode={roomCode}
+                        updateCallback={getRoomDetails} 
                     />
                 </Grid>
                 <Grid item xs={12} align="center">
