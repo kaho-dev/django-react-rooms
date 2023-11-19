@@ -1,7 +1,8 @@
 import React from 'react';
 import {useState} from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { TextField, Button, Grid, Typography, FormControl, Radio, RadioGroup, FormControlLabel, FormHelperText, Collapse } from '@mui/material';
+import { TextField, Button, Grid, Typography, FormControl, Radio, RadioGroup, FormControlLabel, FormHelperText, Collapse, Alert } from '@mui/material';
+
 
 
 const CreateRoomPage = (props) => {
@@ -17,8 +18,8 @@ const CreateRoomPage = (props) => {
   let navigate = useNavigate();
 
   const [guest, setGuest] = useState({
-    guestCanPause: defaultProps.guestCanPause,
-    votesToSkip: defaultProps.votesToSkip,
+    guestCanPause: props.guestCanPause,
+    votesToSkip: props.votesToSkip,
     errorMsg: "",
     successMsg: ""
   });
@@ -88,11 +89,6 @@ const CreateRoomPage = (props) => {
     return(
       <Grid container spacing={1}>
         <Grid item xs={12} align="center">
-          <Collapse in={guest.errorMsg != "" || guest.sucessMsg != ""}>
-            {guest.successMsg}
-          </Collapse>
-        </Grid>
-        <Grid item xs={12} align="center">
           <Button color="primary" variant="contained" onClick={handleRoomButtonPressed}>Create a Room</Button>
         </Grid>
         <Grid item xs={12} align="center">
@@ -114,6 +110,37 @@ const CreateRoomPage = (props) => {
     <div className="create-room__main">
         <Grid container spacing={1}>
           <Grid item xs={12} align="center">
+            <Collapse
+              in={guest.errorMsg != "" || guest.successMsg != ""}
+            >
+              {guest.successMsg != "" ? (
+                <Alert
+                  severity="success"
+                  onClose={() => {
+                    setGuest({
+                      ...guest, 
+                      successMsg: "" 
+                    });
+                  }}
+                >
+                  {guest.successMsg}
+                </Alert>
+              ) : (
+                <Alert
+                  severity="error"
+                  onClose={() => {
+                    setGuest({
+                      ...guest, 
+                      errorMsg: "" 
+                    });
+                  }}
+                >
+                  {guest.errorMsg}
+                </Alert>
+              )}
+            </Collapse>
+          </Grid>
+          <Grid item xs={12} align="center">
             <Typography variant="h4">
               {title}
             </Typography>
@@ -133,7 +160,7 @@ const CreateRoomPage = (props) => {
           </Grid>
           <Grid item xs={12} align="center">
             <FormControl>
-              <TextField required={true} type="number" onChange={handleVotesChange} default={defaultProps.votesToSkip} inputProps={
+              <TextField required={true} type="number" onChange={handleVotesChange} defaultValue={guest.votesToSkip} inputProps={
                   {
                     min: 1,
                     style: { textAlign: "center" },
