@@ -18,3 +18,5 @@ for functional components.
 
 In lesson 9, I replaced the componentDidMount function with useEffect. In order to make this async, I added an async function and await in the response so that it 
 would work correctly and similar to componentDidMount. I also split the homepage component into FrontPage.js so as to keep my components separated. 
+
+In lesson 12 I had to fix bugs with the alert messages, as the video uses class components, it was structured out differently. I opted to use functional components so it was a slightly different approach. 
